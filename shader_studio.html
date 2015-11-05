@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="shader_studio.css">
+    
 <script id="vertex-default" type="x-shader/x-vertex">
 attribute vec4 vPosition;
 attribute vec4 vNormal;
@@ -12,6 +13,7 @@ void main(){
     gl_Position = mProj * vPosition;
 }
 </script>
+    
 <script id="fragment-default" type="x-shader/x-fragment">
 precision mediump float;
 void main() {
@@ -22,8 +24,8 @@ void main() {
 <script type="text/javascript" src="../Common/webgl-utils.js"></script>
 <script type="text/javascript" src="../Common/initShaders.js"></script>
 <script type="text/javascript" src="../Common/MV.js"></script>
-<script type="text/javascript" src="shader_studio.js"></script>
 <script type="text/javascript" src="cube.js"></script>
+<script type="text/javascript" src="shader_studio.js"></script>
 </head>
 <body>
   <title>Shader Studio</title>
@@ -53,6 +55,10 @@ void main() {
             <option value="Axonometrica">Axonométrica</option>
             <option value="Obliqua">Oblíqua</option>
         </select>
+        <input id="slide1" type="range"
+min="0" max="100" step="10" value="50" />
+        <input id="slide2" type="range"
+min="0" max="100" step="10" value="50" />
         
         <div>
             <canvas id="gl-canvas" width="512" height="512"> Oops... your browser doesn't support the HTML5 canvas element"
