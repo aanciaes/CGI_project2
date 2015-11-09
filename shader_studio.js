@@ -82,6 +82,7 @@ function setupGUI() {
             case "Esfera":
                 break;
             case "Cilindro":
+            	cylinderInit();
                 break;
         }
     }
@@ -125,6 +126,10 @@ function render() {
     {
         cubeDrawWireFrame(gl,program);
         //cubeDrawWireFrame(gl,program);
+    }
+    if( document.getElementById("object").value == "Cilindro")
+    {
+        drawCylinder(gl, program);
     }
     
     
