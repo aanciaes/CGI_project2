@@ -9,6 +9,25 @@ var program;
 
 var projection;
 
+var projPerspective = mult(rotateX(23),rotateY(-30));
+
+var projFront = mat4(1,0,0,0,
+                     0,1,0,0,
+                     0,0,0,0,
+                     0,0,0,1);
+
+var projTop = mat4(1,0,0,0,
+                   0,0,-1,0,
+                   0,0,0,0,
+                   0,0,0,1);
+
+var projOblique = mat4(1,0,-0.75*Math.cos(45),0,
+                       0,1,-0.75*Math.sin(45),0,
+                       0,0,0,0,
+                       0,0,0,1);
+
+
+
 
 
 function initialize() {
@@ -72,13 +91,13 @@ function setupGUI() {
         switch(this.value) {
             case "AP":
                 
-                projection = mult(rotateX(23),rotateY(-30));
+                projection =  projFront;
                 break;
             case "PLANTA":
-           
+                 projection = projTop;
                 break;
             case "Axonometrica": 
-                projection = projAxo;
+                projection = projTop;
                 break;
             case "Obliqua":
                 projection = projOblique;
@@ -105,7 +124,7 @@ function render() {
     if( document.getElementById("object").value == "Cubo")
     {
         cubeDrawWireFrame(gl,program);
-        cubeDrawWireFrame(gl,program);
+        //cubeDrawWireFrame(gl,program);
     }
     
     
