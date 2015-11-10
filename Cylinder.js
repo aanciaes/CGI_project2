@@ -1,12 +1,22 @@
 var segments = 32;
 
-var cylinderBotVertices;
-var cylinderTopVertices;
+var vertices = [];
 
-var cylinderEdges;
+var cylinderBotVertices=[];
+var cylinderTopVertices=[];
 
-var cylinderEdgesBuffer = [];
-var cylinderVertexBuffer = [];
+
+var cylinderEdges = [];
+var cylinderFaces = [];
+var cylinderNormal = [];
+var points = [];
+
+var cylinderEdgesBuffer;
+var cylinderFacesBuffer;
+var cylinderPointsBuffer;
+var cylinderNormalBuffer;
+
+
 
 function cylinderInit(){
 	cylinderBuild(segments);
@@ -14,13 +24,13 @@ function cylinderInit(){
 }
 
 function cylinderUpLoadData (gl){
-	cylinderVertexBuffer = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, cylinderVertexBuffer);
-	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verts), gl.STATIC_DRAW);
-	
-	cylinderEdgesBuffer = gl.createBuffer();
-	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderEdgesBuffer);
-	gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Float32Array(cylinderEdges), gl.STATIC_DRAW);
+//	cylinderVertexBuffer = gl.createBuffer();
+//	gl.bindBuffer(gl.ARRAY_BUFFER, cylinderVertexBuffer);
+//	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verts), gl.STATIC_DRAW);
+//	
+//	cylinderEdgesBuffer = gl.createBuffer();
+//	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderEdgesBuffer);
+//	gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Float32Array(cylinderEdges), gl.STATIC_DRAW);
 }
 
 function drawCylinder (gl, program){
@@ -33,32 +43,34 @@ function drawCylinder (gl, program){
     gl.drawElements(gl.LINES,cylinderEdges.length,gl.UNSIGNED_BYTE,0);
 }
 
-function cylinderBuild(segments) {
-	   var theta = (Math.PI / 180) * (360 / segments); //Degrees = radians * (180 / π)
+function cylinderBuild (sgments) {
+	addPoints(segments);
+	addFaces();
+}
+
+/**
+ * Descobre os pontos dependendo do segments e adiciona ao vetor vertices
+ * @param segments Numero de segmentos em que dividimos a base
+ */
+function addPoints(segments) {
+	   var theta = (2*Math.PI / segments); //Degrees = radians * (180 / π)
 	   
 
 	   for (i =0;i<=segments;i++){
-	       var x =  Math.cos(theta*i); 
-	       var z =  Math.sin(theta*i);
+	       var x =  0.5*Math.cos(theta*i); 
+	       var z =  0.5*Math.sin(theta*i);
+	   
+	       vertices.push(vec3(x,-0.5,z));	//Bottom Vertex
+	       vertices.push(vec3(x,0.5,z));	//Top Vertex
 	       
-	       var offset = cylinderBotVertices.length;
+	       /****************************************************************
+	        *                                                              *
+	        * NAO SEI SE É PRECISO MAS ADICIONA-SE CASO SEJA PRECISO DEPOIS*
+	        *                                                              *
+	        ****************************************************************/
+	       cylinderBotVertices(vec3(x,-0.5,z));
+	       cylinderTopVertices(vec3(x,0.5,z));
 	       
-	       cylinderBotVertices.push(0,-0,5,0);
-	       cylinderBotVertices.push(x, -0.5, z); //Bottomvertices
-	       cylinderEdges.push(offset);
-	       cylinderEdges.push(offset+1);
-	       i+=1;
-	       
-	       x =  Math.cos(theta*i); 
-	       z =  Math.sin(theta*i);
 	      
-	       cylinderBotVertices.push(x, -0.5, z); //Bottomvertices
-	       cylinderEdges.push(offset+2);
-	       cylinderEdges.push(offset);
-	      
-	      //cylinderSideVertices.push(x, y, z); //Sidevertices along the bottom 
-	      //cylinderSideVertices.push(x, y+2, z); //Sidevertices along the top with y = 2
-	     
-	      //cylinderTopVertices.push(x, 0.5, z); //Topvertices with y = 2
 	   }
 }
