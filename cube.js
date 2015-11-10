@@ -8,7 +8,7 @@ cube_vertices = [
     vec3(+0.5, +0.5, -0.5),     // 6
     vec3(-0.5, +0.5, -0.5)      // 7
 ];
-    
+
 var cube_points = [];
 var cube_normals = [];
 var cube_faces = [];
@@ -24,44 +24,7 @@ function cubeInit() {
     cubeUploadData(gl);
 }
 
-function cubeUploadData(gl){
-    cube_points_buffer =gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, cube_points_buffer);
-    gl.bufferData(gl.ARRAY_BUFFER,flatten(cube_points),gl.STATIC_DRAW);
-
-    cube_normals_buffer =gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, cube_normals_buffer);
-    gl.bufferData(gl.ARRAY_BUFFER,flatten(cube_normals),gl.STATIC_DRAW);
-
-    cube_faces_buffer=gl.createBuffer();
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube_faces_buffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint8Array(cube_faces),gl.STATIC_DRAW);
-
-    cube_edges_buffer=gl.createBuffer();
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube_edges_buffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint8Array(cube_edges),gl.STATIC_DRAW);
-
-
-}
-
-function cubeDrawWireFrame(gl,program){
-    
-     gl.bindBuffer(gl.ARRAY_BUFFER, cube_points_buffer);
-     var vPosition=gl.getAttribLocation(program,"vPosition");
-     gl.vertexAttribPointer(vPosition,3,gl.FLOAT,false,0,0);
-     gl.enableVertexAttribArray(vPosition);
-
-     gl.bindBuffer(gl.ARRAY_BUFFER, cube_normals_buffer);
-     var vNormal=gl.getAttribLocation(program,"vNormal");
-     gl.vertexAttribPointer(vNormal,3,gl.FLOAT,false,0,0);
-     gl.enableVertexAttribArray(vNormal);
-
-      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube_edges_buffer);
-      gl.drawElements(gl.LINES,cube_edges.length,gl.UNSIGNED_BYTE,0);
-}
-
-
-function cubeBuild() 
+function cubeBuild()
 {
     cubeAddFace(0,1,2,3,vec3(0,0,1));
     cubeAddFace(1,5,6,2,vec3(1,0,0));
@@ -71,6 +34,60 @@ function cubeBuild()
     cubeAddFace(0,4,5,1,vec3(0,-1,0));    
 }
 
+function cubeUploadData(gl)
+{
+    cube_points_buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, cube_points_buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(cube_points), gl.STATIC_DRAW);
+    
+    cube_normals_buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, cube_normals_buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(cube_normals), gl.STATIC_DRAW);
+    
+    cube_faces_buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube_faces_buffer);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(cube_faces), gl.STATIC_DRAW);
+    
+    cube_edges_buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube_edges_buffer);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(cube_edges), gl.STATIC_DRAW);
+}
+
+function cubeDrawWireFrame(gl, program)
+{    
+    gl.useProgram(program);
+    
+    gl.bindBuffer(gl.ARRAY_BUFFER, cube_points_buffer);
+    var vPosition = gl.getAttribLocation(program, "vPosition");
+    gl.vertexAttribPointer(vPosition, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vPosition);
+    
+    gl.bindBuffer(gl.ARRAY_BUFFER, cube_normals_buffer);
+    var vNormal = gl.getAttribLocation(program, "vNormal");
+    gl.vertexAttribPointer(vNormal, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vNormal);
+    
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube_edges_buffer);
+    gl.drawElements(gl.LINES, cube_edges.length, gl.UNSIGNED_BYTE, 0);
+}
+
+function cubeDrawFilled(gl, program)
+{
+    gl.useProgram(program);
+    
+    gl.bindBuffer(gl.ARRAY_BUFFER, cube_points_buffer);
+    var vPosition = gl.getAttribLocation(program, "vPosition");
+    gl.vertexAttribPointer(vPosition, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vPosition);
+    
+    gl.bindBuffer(gl.ARRAY_BUFFER, cube_normals_buffer);
+    var vNormal = gl.getAttribLocation(program, "vNormal");
+    gl.vertexAttribPointer(vNormal, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vNormal);
+    
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube_faces_buffer);
+    gl.drawElements(gl.TRIANGLES, cube_faces.length, gl.UNSIGNED_BYTE, 0);
+}
 
 function cubeAddFace(a, b, c, d, n)
 {

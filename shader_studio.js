@@ -125,7 +125,6 @@ function render() {
     if( document.getElementById("object").value == "Cubo")
     {
         cubeDrawWireFrame(gl,program);
-        //cubeDrawWireFrame(gl,program);
     }
     if( document.getElementById("object").value == "Cilindro")
     {
