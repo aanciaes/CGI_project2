@@ -10,7 +10,7 @@ var cylinderVertexBuffer = [];
 
 function cylinderInit(){
 	cylinderBuild(segments);
-	cylinderUpLoadData(gl, program);
+	cylinderUpLoadData(gl);
 }
 
 function cylinderUpLoadData (gl){
@@ -19,8 +19,8 @@ function cylinderUpLoadData (gl){
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verts), gl.STATIC_DRAW);
 	
 	cylinderEdgesBuffer = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, cylinderEdgesBuffer);
-	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(cylinderEdges), gl.STATIC_DRAW);
+	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderEdgesBuffer);
+	gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Float32Array(cylinderEdges), gl.STATIC_DRAW);
 }
 
 function drawCylinder (gl, program){

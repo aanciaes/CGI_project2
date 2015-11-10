@@ -82,7 +82,7 @@ function setupGUI() {
             case "Esfera":
                 break;
             case "Cilindro":
-            	cylinderInit();
+            	cylinderInit(gl);
                 break;
         }
     }
