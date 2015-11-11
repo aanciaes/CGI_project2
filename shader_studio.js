@@ -38,6 +38,7 @@ function initialize() {
     gl.enable(gl.DEPTH_TEST);
     
     program = initShaders(gl, "vertex-default", "fragment-default");
+    
    
     // remaining initializations
     projection = mult(rotateX(23),rotateY(-30));
@@ -45,12 +46,19 @@ function initialize() {
 
 function updateShaderAreas()
 {
-    vertex_shader_area.value = document.getElementById(vtxName()).text;
-    fragment_shader_area.value = document.getElementById(frgName()).text;    
+    vertex_shader_area.value = document.getElementById("vertex-shader-area").value ;
+    fragment_shader_area.value = document.getElementById("fragment-default").text;   
+    
+    document.getElementById("vertex-default").text = vertex_shader_area.value;
+    document.getElementById("fragment-default").text =  fragment_shader_area.value;
+
+    program = initShaders(gl, "vertex-default", "fragment-default");
+
 }
 
 function setupGUI() {
     document.getElementById("vertex-shader-area").value = document.getElementById("vertex-default").innerHTML;
+    
     vertex_shader_area = document.getElementById("vertex-shader-area");
     vertex_shader_area.style.width="512px";
     vertex_shader_area.resize = "none";
@@ -61,11 +69,11 @@ function setupGUI() {
     fragment_shader_area.resize = "none";
 
     vertex_shader_area.onchange = function () {
-        
+        updateShaderAreas();
     }
     
     fragment_shader_area.onchange = function () {  
-        
+        updateShaderAreas();
     }
     
     document.getElementById("shading").onchange = function() {
@@ -73,6 +81,9 @@ function setupGUI() {
             case "Gouraud":
                 break;
             case "Phong":
+                document.getElementById("vertex-shader-area").value = document.getElementById("vertex-phong").innerHTML;
+                document.getElementById("fragment-shader-area").value = document.getElementById("fragment-phong").innerHTML;
+            //    program = initShaders(gl, "vertex-phong", "fragment-phong");
                 break;
         }    
         updateShaderAreas();
@@ -117,7 +128,7 @@ function setupGUI() {
 function changeFilling(){
     
     filling *=-1;
-render();}
+}
 
 
 
