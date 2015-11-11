@@ -85,8 +85,8 @@ function cubeDrawFilled(gl, program)
     gl.vertexAttribPointer(vNormal, 3, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vNormal);
     
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube_faces_buffer);
-gl.drawElements(gl.TRIANGLES, cube_faces.length, gl.UNSIGNED_BYTE, 0);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube_faces_buffer);
+    gl.drawElements(gl.TRIANGLES, cube_faces.length, gl.UNSIGNED_BYTE, 0);
     
     
     
@@ -119,4 +119,5 @@ function cubeAddFace(a, b, c, d, n)
     // Add second edge (b,c)
     cube_edges.push(offset+1);
     cube_edges.push(offset+2);
+    alert();
 }
