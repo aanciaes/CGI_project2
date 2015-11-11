@@ -143,6 +143,8 @@ function setupGUI() {
 function hideStuff(){
     document.getElementById("Perspective").style.display = "none";
     document.getElementById("Oblique").style.display = "none";
+    document.getElementById("Axo").style.display = "none";
+
 }
 
 function changeFilling(){
