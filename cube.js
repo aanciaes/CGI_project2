@@ -73,7 +73,7 @@ function cubeDrawWireFrame(gl, program)
 
 function cubeDrawFilled(gl, program)
 {
-    gl.useProgram(program);
+    //gl.useProgram(program);
     
     gl.bindBuffer(gl.ARRAY_BUFFER, cube_points_buffer);
     var vPosition = gl.getAttribLocation(program, "vPosition");
@@ -85,8 +85,11 @@ function cubeDrawFilled(gl, program)
     gl.vertexAttribPointer(vNormal, 3, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vNormal);
     
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube_faces_buffer);
-    gl.drawElements(gl.TRIANGLES, cube_faces.length, gl.UNSIGNED_BYTE, 0);
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube_faces_buffer);
+gl.drawElements(gl.TRIANGLES, cube_faces.length, gl.UNSIGNED_BYTE, 0);
+    
+    
+    
 }
 
 function cubeAddFace(a, b, c, d, n)

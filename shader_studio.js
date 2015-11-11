@@ -21,13 +21,15 @@ var projTop = mat4(1,0,0,0,
                    0,0,0,0,
                    0,0,0,1);
 
+
+//PASSAR PARA RADIANOS
 var projOblique = mat4(1,0,-0.75*Math.cos(45),0,
                        0,1,-0.75*Math.sin(45),0,
                        0,0,0,0,
                        0,0,0,1);
 
 
-
+var filling = 1;
 
 
 function initialize() {
@@ -59,9 +61,11 @@ function setupGUI() {
     fragment_shader_area.resize = "none";
 
     vertex_shader_area.onchange = function () {
+        
     }
     
     fragment_shader_area.onchange = function () {  
+        
     }
     
     document.getElementById("shading").onchange = function() {
@@ -110,6 +114,11 @@ function setupGUI() {
     }
 }
 
+function changeFilling(){
+    
+    filling *=-1;
+render();}
+
 
 
 function render() {
@@ -119,12 +128,16 @@ function render() {
     
     //aximetric projection
     //send the current projection matrix
+    
     var mProj= gl.getUniformLocation(program,"mProj");
     gl.uniformMatrix4fv(mProj,false,flatten(projection));
     
     if( document.getElementById("object").value == "Cubo")
     {
+        if(filling == 1)
         cubeDrawWireFrame(gl,program);
+            else
+        cubeDrawFilled(gl,program);
     }
     if( document.getElementById("object").value == "Cilindro")
     {
