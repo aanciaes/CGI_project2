@@ -9,7 +9,7 @@ var program;
 
 var projection;
 
-var projPerspective = mult(rotateX(23),rotateY(-30));
+var projAxo = mult(rotateX(23),rotateY(-30));
 
 var projFront = mat4(1,0,0,0,
                      0,1,0,0,
@@ -23,10 +23,16 @@ var projTop = mat4(1,0,0,0,
 
 
 //PASSAR PARA RADIANOS
-var projOblique = mat4(1,0,-0.75*Math.cos(45),0,
-                       0,1,-0.75*Math.sin(45),0,
+var projOblique = mat4(1,0,-0.75*Math.cos(radians(45)),0,
+                       0,1,-0.75*Math.sin(radians(45)),0,
                        0,0,0,0,
                        0,0,0,1);
+
+var projPerspective = mat4(1,0,0,0,
+                       0,1,0,0,
+                       0,0,1,0,
+                       0,0,1.5,0);
+
 
 
 var filling = 1;
@@ -47,7 +53,7 @@ function initialize() {
 function updateShaderAreas()
 {
     vertex_shader_area.value = document.getElementById("vertex-shader-area").value ;
-    fragment_shader_area.value = document.getElementById("fragment-default").text;   
+    fragment_shader_area.value = document.getElementById("fragment-shader-area").value;   
     
     document.getElementById("vertex-default").text = vertex_shader_area.value;
     document.getElementById("fragment-default").text =  fragment_shader_area.value;
@@ -64,6 +70,7 @@ function setupGUI() {
     vertex_shader_area.resize = "none";
 
     document.getElementById("fragment-shader-area").value = document.getElementById("fragment-default").innerHTML;
+    
     fragment_shader_area = document.getElementById("fragment-shader-area");
     fragment_shader_area.style.width="512px";
     fragment_shader_area.resize = "none";
@@ -83,7 +90,7 @@ function setupGUI() {
             case "Phong":
                 document.getElementById("vertex-shader-area").value = document.getElementById("vertex-phong").innerHTML;
                 document.getElementById("fragment-shader-area").value = document.getElementById("fragment-phong").innerHTML;
-            //    program = initShaders(gl, "vertex-phong", "fragment-phong");
+               // program = initShaders(gl, "vertex-phong", "fragment-phong");
                 break;
         }    
         updateShaderAreas();
@@ -104,25 +111,38 @@ function setupGUI() {
 
     
     document.getElementById("projection").onchange = function() {
+        hideStuff();
         switch(this.value) {
             case "AP":
                 
                 projection =  projFront;
                 break;
+                
             case "PLANTA":
                  projection = projTop;
                 break;
+                
             case "Axonometrica": 
-                projection = projTop;
+                document.getElementById("Axo").style.display = "block";
+                projection = projAxo;
                 break;
+                
             case "Obliqua":
+                document.getElementById("Oblique").style.display = "block";
                 projection = projOblique;
                 break;
+                
             case "Perspetiva":
-                projection = projPerspective;
+                document.getElementById("Perspective").style.display = "block";
+                projection =  projPerspective;
                 break;
         }
     }
+}
+
+function hideStuff(){
+    document.getElementById("Perspective").style.display = "none";
+    document.getElementById("Oblique").style.display = "none";
 }
 
 function changeFilling(){
@@ -130,6 +150,36 @@ function changeFilling(){
     filling *=-1;
 }
 
+function changePerspective(d){
+    //d = document.getElementById("rangeInput").value;
+    projPerspective=  mat4(1,0,0,0,
+                       0,1,0,0,
+                       0,0,1,0,
+                       0,0,1/d,0);
+    
+    projection = projPerspective;
+}
+
+function changeObliq(l,a){
+    l = document.getElementById("rangeL").value;
+    a = document.getElementById("rangeA").value;
+
+    var projOblique = mat4(1,0,-l*Math.cos(radians(a)),0,
+                       0,1,-l*Math.sin(radians(a)),0,
+                       0,0,0,0,
+                       0,0,0,1);
+    
+    projection = projOblique;
+}
+
+function changeAxo(){
+    
+    X = document.getElementById("rangeX").value;
+    Y = document.getElementById("rangeY").value;
+    
+    projAxo = mult(rotateX(X),rotateY(Y));
+    projection = projAxo;
+}
 
 
 function render() {
