@@ -1,4 +1,4 @@
-var segments = 32;
+var segments = 5;
 
 var vertices = [];
 
@@ -85,6 +85,7 @@ function addFacesEdges (){
        //push vertices to be used to create edges and faces to points 
         cylinderPoints.push(vertices[lastTop]);
         cylinderPoints.push(vertices[lastBot]);
+        
         cylinderPoints.push(vertices[lastTop+2]);
        cylinderPoints.push(vertices[lastBot+2]);
         
@@ -100,8 +101,8 @@ function addFacesEdges (){
         cylinderEdges.push(lastTop+2);
         
         //third edge
-        cylinderEdges.push(lastTop+2);
-        cylinderEdges.push(0);
+        //cylinderEdges.push(lastTop+2);
+        //cylinderEdges.push(0);
         
         //push face - Top triangle
         cylinderFaces.push(0);
@@ -120,8 +121,8 @@ function addFacesEdges (){
         cylinderEdges.push(lastBot+2);
         
         //third edge
-        cylinderEdges.push(lastBot+2);
-        cylinderEdges.push(1);
+        //cylinderEdges.push(lastBot+2);
+        //cylinderEdges.push(1);
         
         //push face - Bottom triangle
         cylinderFaces.push(1);
@@ -131,10 +132,10 @@ function addFacesEdges (){
         
         /*side rectangle*/
         //push edges of the two triangles to be made in te middle
-        cylinderEdges.push(lastBot);
-        cylinderEdges.push(lastTop);
-        cylinderEdges.push(lastBot+2);
-        cylinderEdges.push(lastTop+2);
+        //cylinderEdges.push(lastBot);                                       /*******************
+        //cylinderEdges.push(lastTop);                                       *  REPEATED EDGES  *
+        //cylinderEdges.push(lastBot+2);                                     *******************/
+        //cylinderEdges.push(lastTop+2);
         cylinderEdges.push(lastTop);
         cylinderEdges.push(lastBot+2);
         
@@ -157,7 +158,7 @@ function addFacesEdges (){
 
 
 /**
- * Descobre os pontos dependendo do segments e adiciona ao vetor vertices
+ * Descobre os pontos dependendo do numero de segmentos e adiciona ao vetor vertices
  * @param segments Numero de segmentos em que dividimos a base
  */
 function addPoints(segments) {
@@ -170,6 +171,8 @@ function addPoints(segments) {
 	       var x =  0.5*Math.cos(theta*i); 
 	       var z =  0.5*Math.sin(theta*i);
 	   
+           
+
 	       vertices.push(vec3(x,0.5,z));	//Bottom Vertex
 	       vertices.push(vec3(x,-0.5,z));	//Top Vertex
 
