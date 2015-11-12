@@ -123,17 +123,17 @@ function setupGUI() {
                 break;
                 
             case "Axonometrica": 
-                document.getElementById("Axo").style.display = "block";
+                document.getElementById("Axo").style.display = "inline";
                 projection = projAxo;
                 break;
                 
             case "Obliqua":
-                document.getElementById("Oblique").style.display = "block";
+                document.getElementById("Oblique").style.display = "inline";
                 projection = projOblique;
                 break;
                 
             case "Perspetiva":
-                document.getElementById("Perspective").style.display = "block";
+                document.getElementById("Perspective").style.display = "inline";
                 projection =  projPerspective;
                 break;
         }
