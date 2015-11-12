@@ -119,5 +119,4 @@ function cubeAddFace(a, b, c, d, n)
     // Add second edge (b,c)
     cube_edges.push(offset+1);
     cube_edges.push(offset+2);
-    alert();
 }

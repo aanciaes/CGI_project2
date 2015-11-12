@@ -68,56 +68,69 @@ function cylinderBuild (sgments) {
 }
 
 function addFacesEdges (){
+    //First vertices to be used
     var lastPointUsedTop = [2];
     var lastPointUsedBot = [3];
     
+    //Push bot and top center vertices
     cylinderPoints.push(vertices[0]);
     cylinderPoints.push(vertices[1]);
     
     for(i=0;i<segments*2;i++){
+        //pop last vertice used to re use again
         var lastTop = lastPointUsedTop.pop();
         var lastBot = lastPointUsedBot.pop();
         
         
-        
+       //push vertices to be used to create edges and faces to points 
         cylinderPoints.push(vertices[lastTop]);
         cylinderPoints.push(vertices[lastBot]);
         cylinderPoints.push(vertices[lastTop+2]);
-       
-        cylinderPoints.push(vertices[lastBot+2]);
+       cylinderPoints.push(vertices[lastBot+2]);
         
         
-        //start top triangle
+        /*start top triangle*/
+        
+        //first edge
         cylinderEdges.push(0);
         cylinderEdges.push(lastTop);
         
+        //Second Edge
         cylinderEdges.push(lastTop);
         cylinderEdges.push(lastTop+2);
         
+        //third edge
         cylinderEdges.push(lastTop+2);
         cylinderEdges.push(0);
         
+        //push face - Top triangle
         cylinderFaces.push(0);
         cylinderFaces.push(lastTop);
         cylinderFaces.push(lastTop+2);
-        //end top triangle
+        /*end top triangle*/
         
-        //start bot triangle
+        /*start bot triangle*/
+        
+        //first edge
         cylinderEdges.push(1);
         cylinderEdges.push(lastBot);
         
+        //Second edge
         cylinderEdges.push(lastBot);
         cylinderEdges.push(lastBot+2);
         
+        //third edge
         cylinderEdges.push(lastBot+2);
         cylinderEdges.push(1);
         
+        //push face - Bottom triangle
         cylinderFaces.push(1);
         cylinderFaces.push(lastBot);
         cylinderFaces.push(lastBot+2);
         //end bot triangle
         
-        //side rectangle
+        /*side rectangle*/
+        //push edges of the two triangles to be made in te middle
         cylinderEdges.push(lastBot);
         cylinderEdges.push(lastTop);
         cylinderEdges.push(lastBot+2);
@@ -125,20 +138,20 @@ function addFacesEdges (){
         cylinderEdges.push(lastTop);
         cylinderEdges.push(lastBot+2);
         
-        
+        //first triangle of middle section
         cylinderFaces.push(lastTop);
         cylinderFaces.push(lastBot);
         cylinderFaces.push(lastBot+2);
         
+        //Second triangle of middle section
         cylinderFaces.push(lastTop);
         cylinderFaces.push(lastTop+2);
         cylinderFaces.push(lastBot+2);
-        //end side rectangle
+        /*end side rectangle*/
         
-    
+        //push last used vertices to help next section
         lastPointUsedTop.push(lastTop+2);
         lastPointUsedBot.push(lastBot+2);
-        alert(i);
     }
 }
 
@@ -166,7 +179,8 @@ function addPoints(segments) {
 	        * NAO SEI SE É PRECISO MAS ADICIONA-SE CASO SEJA PRECISO DEPOIS*
 	        *                                                              *
 	        ****************************************************************/
-	       cylinderBotVertices.push(vec3(x,-0.5,z));
+	      //Nao necessario, falar com o prof
+           cylinderBotVertices.push(vec3(x,-0.5,z));
 	       cylinderTopVertices.push(vec3(x,0.5,z));
        }
 }
