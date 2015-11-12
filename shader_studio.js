@@ -204,7 +204,11 @@ function render() {
     }
     if( document.getElementById("object").value == "Cilindro")
     {
-        drawCylinder(gl, program);
+        if(filling == 1)
+        cylinderDrawWireFrame(gl, program);
+        else
+                    cylinderDrawFilled(gl,program);
+
     }
     
     
