@@ -114,6 +114,7 @@ function setupGUI() {
                 cubeInit(gl);
                 break;
             case "Esfera":
+                sphereInit(gl);
                 break;
             case "Cilindro":
             	cylinderInit(gl);
@@ -222,7 +223,9 @@ function render() {
                     cylinderDrawFilled(gl,program);
 
     }
-    
+    if( document.getElementById("object").value == "Esfera"){
+        sphereDrawWireFrame(gl, program);   
+    }
     
     requestAnimFrame(render);
 }

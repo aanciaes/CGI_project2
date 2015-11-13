@@ -1,4 +1,4 @@
-var segments = 5;
+var segments = 32;
 
 var vertices = [];
 
