@@ -11,27 +11,15 @@ var projection;
 
 var projAxo = mult(rotateX(23),rotateY(-30));
 
-var projFront = mat4(1,0,0,0,
-                     0,1,0,0,
-                     0,0,0,0,
-                     0,0,0,1);
+var projFront;
 
-var projTop = mat4(1,0,0,0,
-                   0,0,-1,0,
-                   0,0,0,0,
-                   0,0,0,1);
+var projTop;
 
 
 //PASSAR PARA RADIANOS
-var projOblique = mat4(1,0,-0.75*Math.cos(radians(45)),0,
-                       0,1,-0.75*Math.sin(radians(45)),0,
-                       0,0,0,0,
-                       0,0,0,1);
+var projOblique;
 
-var projPerspective = mat4(1,0,0,0,
-                       0,1,0,0,
-                       0,0,1,0,
-                       0,0,1.5,0);
+var projPerspective;
 
 
 
@@ -47,7 +35,31 @@ function initialize() {
     
    
     // remaining initializations
-    projection = mult(rotateX(23),rotateY(-30));
+    projFront = mat4(1,0,0,0,
+                     0,1,0,0,
+                     0,0,0,0,
+                     0,0,0,1);
+    
+     projTop = mat4(1,0,0,0,
+                   0,0,-1,0,
+                   0,0,0,0,
+                   0,0,0,1);
+    
+    projOblique = mat4(1,0,-0.75*Math.cos(radians(45)),0,
+                       0,1,-0.75*Math.sin(radians(45)),0,
+                       0,0,0,0,
+                       0,0,0,1);
+    
+    projPerspective = mat4(1,0,0,0,
+                       0,1,0,0,
+                       0,0,1,0,
+                       0,0,1.5,0);
+    
+    projAxo = mult(rotateX(23),rotateY(-30))
+
+    
+    projection = projAxo;
+    
 }
 
 function updateShaderAreas()
