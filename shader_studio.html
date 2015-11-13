@@ -7,12 +7,13 @@
 <script id="vertex-default" type="x-shader/x-vertex">
 attribute vec4 vPosition;
 attribute vec4 vNormal;
+
 varying vec4 fColor;
 uniform mat4 mProj;
 
 void main(){
 
-    fColor = vec4(1.0, 1.0, 1.0, 1.0);
+    fColor = vNormal;
     gl_Position = mProj * vPosition;
     gl_Position.z = - gl_Position.z;
 }
@@ -117,6 +118,7 @@ void main() {
         </select>
         Vista:
         <select id="projection">
+            <option value="nothing">Select View</option>
             <option value="AP">Alçado Principal</option>
             <option value="PLANTA">Topo</option>
             <option value="Perspetiva">Perspetiva</option>
@@ -127,7 +129,7 @@ void main() {
         <input type="submit" onclick="changeFilling()" value=" Mudar Preenchimento"/>
         <table><tr><td height="30">
         <div id="Perspective"  style="display: none;">    
-        Valor de d-> <input type="range" oninput="changePerspective(this.value)"  id="rangeD" min="0.1" max="1" step="0.1"/>
+        Valor de d-> <input type="range" oninput="changePerspective(this.value)"  id="rangeD" min="0.005" max="1" step="0.001"/>
         </div>
         
         <div id="Oblique"  style="display: none;">   
