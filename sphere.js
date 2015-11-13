@@ -2,10 +2,9 @@
 
 var sphereVertices=[];
 var r=0.5;
-var numPointsPerCirc;
-var degrees = 20;
-var nlat = 8;
-var nlong = 8;
+var numPointsPerCirc=0;
+var nlat = 20;
+var nlong = 20;
 
 
 var sphere_points=[];
@@ -61,8 +60,8 @@ function sphereAddPoints () {
 	sphereVertices.push(vec3(0,r,0));
 	
 	var x,y,z;
-	for(phi=0;phi<Math.PI;phi+=d_phi){
-		for(theta=0;theta<(2*Math.PI);theta+=d_theta){
+	for(phi=0;phi<=Math.PI;phi+=d_phi){
+		for(theta=0;theta<=(2*Math.PI);theta+=d_theta){
 			//alert("phi = " + phi + " theta = " + theta);
 			x = r*Math.cos(phi)*Math.cos(theta);
 			y = r*Math.sin(phi);
@@ -72,10 +71,19 @@ function sphereAddPoints () {
 		}
 	}
 	sphereVertices.push(vec3(0,-r,0));
-	alert(sphereVertices);
+	//alert(sphereVertices);
 }
 
 function sphereAddFacesEdges () {
-    
+
+    for(i=1;i<sphereVertices.length;i++){
+        sphere_points.push(sphereVertices[i]);
+        //sphere_points.push(sphereVertices[i+1]);
+        //sphere_points.push(sphereVertices[i+nlong*2]);
+        
+        
+        sphere_edges.push(i);
+        sphere_edges.push(i+1);
+    }
 }
 
