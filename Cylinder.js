@@ -1,4 +1,4 @@
-var segments =200;
+var segments =30;
 
 var vertices = [];
 
@@ -85,24 +85,40 @@ function addFacesEdges (){
     //First vertices to be used
     var lastPointUsedTop = [2];
     var lastPointUsedBot = [3];
-    
+    var aux;
     //Push bot and top center vertices
     cylinderPoints.push(vertices[0]);
+        cylinderNormal.push(vec3(0,1,0));
     cylinderPoints.push(vertices[1]);
-    
+        cylinderNormal.push(vec3(0,-1,0));
+
+        //cylinderNormal.push(normalize(vertices[1]));
+
     for(i=0;i<segments*2;i++){
         //pop last vertice used to re use again
         var lastTop = lastPointUsedTop.pop();
         var lastBot = lastPointUsedBot.pop();
         
-        
        //push vertices to be used to create edges and faces to points 
         cylinderPoints.push(vertices[lastTop]);
-        
+                cylinderNormal.push(vec3(0,1,0));
+
+         
+
         cylinderPoints.push(vertices[lastBot]);
-        
+                cylinderNormal.push(vec3(0,-1,0));
+
+           
+
         cylinderPoints.push(vertices[lastTop+2]);
+          aux = vertices[lastTop];
+
+        cylinderNormal.push(normalize(aux[0],0,aux[2]));
+        
         cylinderPoints.push(vertices[lastBot+2]);
+         aux = vertices[lastBot];
+        
+        cylinderNormal.push(normalize(aux[0],0,aux[2]));
         
         
         /*start top triangle*/
@@ -181,9 +197,13 @@ function addFacesEdges (){
 function addPoints(segments) {
 	   var theta = (2*Math.PI / segments); //Degrees = radians * (180 / π)
 	   
-        vertices.push(vec3(0,0.5,0));
-       vertices.push(vec3(0,-0.5,0));
+    vertices.push(vec3(0,0.5,0));
+                  //      cylinderNormal.push(vec3(0,0.5,0));
 
+       vertices.push(vec3(0,-0.5,0));
+        //    cylinderNormal.push(normalize(vec3(0,-0.5,0)));
+    
+    
 	   for (i =0;i<=segments*2;i++){
 	       var x =  0.5*Math.cos(theta*i); 
 	       var z =  0.5*Math.sin(theta*i);
@@ -199,6 +219,9 @@ function addPoints(segments) {
 	        * NAO SEI SE É PRECISO MAS ADICIONA-SE CASO SEJA PRECISO DEPOIS*
 	        *                                                              *
 	        ****************************************************************/
+           
+            //alert("ola");
+
 	      //Nao necessario, falar com o prof
            cylinderBotVertices.push(vec3(x,-0.5,z));
 	       cylinderTopVertices.push(vec3(x,0.5,z));
