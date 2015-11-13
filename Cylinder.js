@@ -1,4 +1,4 @@
-var segments = 32;
+var segments =200;
 
 var vertices = [];
 
@@ -29,14 +29,18 @@ function cylinderUpLoadData (gl){
     cylinderPointsBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, cylinderPointsBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, flatten(cylinderPoints), gl.STATIC_DRAW);
+    
+    cylinderNormalBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, cylinderNormalBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(cylinderNormal), gl.STATIC_DRAW);  
  
     cylinderFacesBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderFacesBuffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(cylinderFaces), gl.STATIC_DRAW);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(cylinderFaces), gl.STATIC_DRAW);
  
     cylinderEdgesBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderEdgesBuffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(cylinderEdges), gl.STATIC_DRAW);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(cylinderEdges), gl.STATIC_DRAW);
  
 }
 
@@ -46,18 +50,28 @@ function cylinderDrawWireFrame (gl, program){
     gl.vertexAttribPointer(vPosition, 3, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vPosition);
     
+    gl.bindBuffer(gl.ARRAY_BUFFER, cylinderNormalBuffer);
+    var vNormal = gl.getAttribLocation(program, "vNormal");
+    gl.vertexAttribPointer(vNormal, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vNormal);
+    
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderEdgesBuffer);
-    gl.drawElements(gl.LINES,cylinderEdges.length,gl.UNSIGNED_BYTE,0);
+    gl.drawElements(gl.LINES,cylinderEdges.length,gl.UNSIGNED_SHORT,0);
 }
 
 function cylinderDrawFilled(gl,program){
-gl.bindBuffer(gl.ARRAY_BUFFER, cylinderPointsBuffer);
+    gl.bindBuffer(gl.ARRAY_BUFFER, cylinderPointsBuffer);
     var vPosition = gl.getAttribLocation(program, "vPosition");
     gl.vertexAttribPointer(vPosition, 3, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vPosition);
     
+    gl.bindBuffer(gl.ARRAY_BUFFER, cylinderNormalBuffer);
+    var vNormal = gl.getAttribLocation(program, "vNormal");
+    gl.vertexAttribPointer(vNormal, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vNormal);
+    
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cylinderFacesBuffer);
-    gl.drawElements(gl.TRIANGLES,cylinderFaces.length,gl.UNSIGNED_BYTE,0);
+    gl.drawElements(gl.TRIANGLES,cylinderFaces.length,gl.UNSIGNED_SHORT,0);
 
 }
 
@@ -84,10 +98,11 @@ function addFacesEdges (){
         
        //push vertices to be used to create edges and faces to points 
         cylinderPoints.push(vertices[lastTop]);
+        
         cylinderPoints.push(vertices[lastBot]);
         
         cylinderPoints.push(vertices[lastTop+2]);
-       cylinderPoints.push(vertices[lastBot+2]);
+        cylinderPoints.push(vertices[lastBot+2]);
         
         
         /*start top triangle*/
@@ -136,6 +151,8 @@ function addFacesEdges (){
         //cylinderEdges.push(lastTop);                                       *  REPEATED EDGES  *
         //cylinderEdges.push(lastBot+2);                                     *******************/
         //cylinderEdges.push(lastTop+2);
+        
+        
         cylinderEdges.push(lastTop);
         cylinderEdges.push(lastBot+2);
         
