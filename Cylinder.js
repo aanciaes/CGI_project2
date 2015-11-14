@@ -111,12 +111,12 @@ function addFacesEdges (){
            
 
         cylinderPoints.push(vertices[lastTop+2]);
-          aux = vertices[lastTop];
+          aux = vertices[lastTop+2];
 
         cylinderNormal.push(normalize(aux[0],0,aux[2]));
         
         cylinderPoints.push(vertices[lastBot+2]);
-         aux = vertices[lastBot];
+         aux = vertices[lastBot+2];
         
         cylinderNormal.push(normalize(aux[0],0,aux[2]));
         

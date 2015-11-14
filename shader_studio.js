@@ -218,13 +218,17 @@ function render() {
     if( document.getElementById("object").value == "Cilindro")
     {
         if(filling == 1)
-        cylinderDrawWireFrame(gl, program);
+            cylinderDrawWireFrame(gl, program);
         else
-                    cylinderDrawFilled(gl,program);
+            cylinderDrawFilled(gl,program);
 
     }
     if( document.getElementById("object").value == "Esfera"){
-        sphereDrawWireFrame(gl, program);   
+        if(filling == 1)
+            sphereDrawWireFrame(gl, program);
+        else
+            sphereDrawFilled(gl, program);
+        
     }
     
     requestAnimFrame(render);
