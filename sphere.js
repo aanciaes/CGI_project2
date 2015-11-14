@@ -31,13 +31,13 @@ function sphereUpLoadData(gl){
     gl.bindBuffer(gl.ARRAY_BUFFER, sphere_points_buffer);
     gl.bufferData(gl.ARRAY_BUFFER, flatten(sphere_points), gl.STATIC_DRAW);
     
-    sphere_faces_buffer = gl.createBuffer();
+    /*sphere_faces_buffer = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, sphere_faces_buffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(sphere_faces), gl.STATIC_DRAW);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(sphere_faces), gl.STATIC_DRAW);*/
     
     sphere_edges_buffer = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, sphere_edges_buffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(sphere_edges), gl.STATIC_DRAW);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(sphere_edges), gl.STATIC_DRAW);
 }
 
 
@@ -50,7 +50,7 @@ function sphereDrawWireFrame(gl, program){
     gl.enableVertexAttribArray(vPosition);
      
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, sphere_edges_buffer);
-    gl.drawElements(gl.LINES, sphere_edges.length, gl.UNSIGNED_BYTE, 0);
+    gl.drawElements(gl.LINES, sphere_edges.length, gl.UNSIGNED_SHORT, 0);
 }
 
 function sphereAddPoints () {
@@ -66,24 +66,35 @@ function sphereAddPoints () {
 			x = r*Math.cos(phi)*Math.cos(theta);
 			y = r*Math.sin(phi);
 			z = r*Math.cos(phi)*Math.sin(theta);
-			sphereVertices.push(vec3(x,y,z));
+			sphere_points.push(vec3(x,y,z));
 			//alert("x = " + x + " y = " + y + " z = " + z);
 		}
 	}
+    
 	sphereVertices.push(vec3(0,-r,0));
+    for(phi=0;phi<=Math.PI;phi+=d_phi){
+		for(theta=0;theta<=(2*Math.PI);theta+=d_theta){
+			//alert("phi = " + phi + " theta = " + theta);
+			x = r*Math.cos(phi)*Math.cos(theta);
+			y = r*Math.sin(phi);
+			z = r*Math.cos(phi)*Math.sin(theta);
+			sphere_points.push(vec3(x,-y,z));
+			//alert("x = " + x + " y = " + y + " z = " + z);
+		}
+	}
 	//alert(sphereVertices);
 }
 
 function sphereAddFacesEdges () {
 
-    for(i=1;i<sphereVertices.length;i++){
-        sphere_points.push(sphereVertices[i]);
+    for(i=1;i<sphere_points.length;i++){
+        //sphere_points.push(sphereVertices[i]);
         //sphere_points.push(sphereVertices[i+1]);
         //sphere_points.push(sphereVertices[i+nlong*2]);
         
         
         sphere_edges.push(i);
-        sphere_edges.push(i+1);
+        //sphere_edges.push(i+1);
     }
 }
 
