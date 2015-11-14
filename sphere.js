@@ -4,13 +4,9 @@ var sphereVertices=[];
 var r=0.5;
 var numPointsPerCirc=0;
 var nlat = 21;   //horizontal
-var nlong = 20; //vertical
-
-var nHor = [];
-var nVer = [];
+var nlong = 25; //vertical
 
 var panico;
-
 
 var sphere_points=[];
 var sphere_edges=[];
@@ -66,12 +62,12 @@ function sphereAddPoints () {
     //alert(2*Math.PI/d_theta);
     //alert(nlong);
     
-    if((2*Math.PI/d_theta)<nlong)
+    /*if((2*Math.PI/d_theta)!=nlong)
         panico = (2*Math.PI)+d_theta;
-    else
+    else*/
         panico = (2*Math.PI);
 
-   for(phi=-Math.PI;phi<=Math.PI;phi+=d_phi){
+   for(phi=-Math.PI;phi<=0;phi+=d_phi){
 		for(theta=0;theta<=panico;theta+=d_theta){
 			//alert("phi = " + phi + " theta = " + theta);
 			x = r*Math.sin(phi)*Math.sin(theta);
@@ -81,61 +77,37 @@ function sphereAddPoints () {
 			sphere_points.push(vec3(x,-y,z));
 			//alert("x = " + x + " y = " + y + " z = " + z);
 		}
-       alert(sphere_points.length);
+      if(sphere_points.length == nlong){
+            x = r*Math.sin(phi)*Math.sin(theta);
+			y = r*Math.cos(phi);
+			z = r*Math.sin(phi)*Math.cos(theta);
+            sphere_points.push(vec3(x,-y,z));
+          panico = (2*Math.PI)+d_theta;
+      }
 	}
 
+    sphere_points.push(vec3(0,-r,0));
 
 }
 
 function sphereAddFacesEdges () {
     var i;
    
-    if(panico==(2*Math.PI)){
-    
+ 
+        //alert("panico");
         for(i=0;i<sphere_points.length-1;i+=1){    
         sphere_edges.push(i);   
         sphere_edges.push(i+1);
+        }
+        
+    for(var j = 1; j <nlong+1; j++){        
+        for(k = j ; k < (sphere_points.length)-(nlong+1) ; k+=nlong+1){
+            sphere_edges.push(k);        
+            sphere_edges.push(k+nlong+1);
     }
-        
-         var k;
-    //sphere_edges.push(i);
-    for(var j = 1; j <nlong; j++){
-        
-    for(k = j ; k < (sphere_points.length/2)-(nlong+1) ; k+=nlong+1){
-        sphere_edges.push(k);        
-        sphere_edges.push(k+nlong+1);
-                            }
             sphere_edges.push(k);
-           sphere_edges.push((sphere_points.length/2));
-
-        
-            }
-        
-        
+            sphere_edges.push((sphere_points.length)-1);
     }
-    
-    
-    else{
-        for(i=0;i<sphere_points.length/2-1;i+=1){    
-        sphere_edges.push(i);   
-        sphere_edges.push(i+1);
-                 var k;
-            //sphere_edges.push(i);
-        for(var j = 1; j <nlong+1; j++){
         
-    for(k = j ; k < (sphere_points.length/2)-(nlong+1) ; k+=nlong+1){
-        sphere_edges.push(k);        
-        sphere_edges.push(k+nlong+1);
-    }
-         sphere_edges.push(k);
-           sphere_edges.push((sphere_points.length/2));
-    }}
-   
-    
-    //sphere_edges.push(k);
-   //sphere_edges.push(sphere_points.length-1);
-
-   }
-
 }
 
