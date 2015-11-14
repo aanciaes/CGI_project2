@@ -48,7 +48,7 @@ function sphereUpLoadData(gl){
 
 
 function sphereDrawWireFrame(gl, program){
-    gl.useProgram(program);
+    //gl.useProgram(program);
     
     gl.bindBuffer(gl.ARRAY_BUFFER, sphere_points_buffer);
     var vPosition = gl.getAttribLocation(program, "vPosition");
@@ -67,8 +67,8 @@ function sphereDrawWireFrame(gl, program){
 
 function sphereDrawFilled(gl, program){
 
-    gl.useProgram(program);
-    alert(sphere_faces.length);
+   // gl.useProgram(program);
+   // alert(sphere_faces.length);
 
     
     gl.bindBuffer(gl.ARRAY_BUFFER, sphere_points_buffer);
@@ -135,7 +135,7 @@ function sphereAddFacesEdges () {
         
     //verticais
     for(var j = 1; j <nlong+1; j++){        
-        for(k = j ; k < (sphere_points.length)-(nlong+1) ; k+=nlong+1){
+        for(k = j ; k < (sphere_points.length)-(nlong+1); k+=nlong+1){
             sphere_edges.push(k);        
             sphere_edges.push(k+nlong+1);
             
@@ -145,8 +145,18 @@ function sphereAddFacesEdges () {
             
             sphere_faces.push(k);
             sphere_faces.push(k+1);
-            sphere_faces.push(k+nlong+2);
-            
+            sphere_faces.push(k+nlong+2); 
+           if(j==1){
+                sphere_faces.push(k);
+                sphere_faces.push(k+nlong+1);
+                sphere_faces.push(k+nlong+1+nlong);
+                
+                sphere_faces.push(k);
+                sphere_faces.push(k+nlong);
+                sphere_faces.push(k+nlong+1+nlong);
+                
+                
+            }
 
     }
             sphere_edges.push(k);
