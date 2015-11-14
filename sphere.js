@@ -3,7 +3,7 @@
 var sphereVertices=[];
 var r=0.5;
 var numPointsPerCirc=0;
-var nlat = 30;   //horizontal
+var nlat = 21;   //horizontal
 var nlong = 20; //vertical
 
 var nHor = [];
@@ -63,9 +63,16 @@ function sphereAddPoints () {
 	var d_theta = (2*Math.PI)/nlong;
 		
 	var x,y,z;
+    //alert(2*Math.PI/d_theta);
+    //alert(nlong);
+    
+    if((2*Math.PI/d_theta)<nlong)
+        panico = (2*Math.PI)+d_theta;
+    else
+        panico = (2*Math.PI);
 
    for(phi=-Math.PI;phi<=Math.PI;phi+=d_phi){
-		for(theta=0;theta<=(2*Math.PI);theta+=d_theta){
+		for(theta=0;theta<=panico;theta+=d_theta){
 			//alert("phi = " + phi + " theta = " + theta);
 			x = r*Math.sin(phi)*Math.sin(theta);
 			y = r*Math.cos(phi);
@@ -74,6 +81,7 @@ function sphereAddPoints () {
 			sphere_points.push(vec3(x,-y,z));
 			//alert("x = " + x + " y = " + y + " z = " + z);
 		}
+       alert(sphere_points.length);
 	}
 
 
@@ -82,19 +90,52 @@ function sphereAddPoints () {
 function sphereAddFacesEdges () {
     var i;
    
-    for(i=0;i<sphere_points.length-1;i+=1){    
+    if(panico==(2*Math.PI)){
+    
+        for(i=0;i<sphere_points.length-1;i+=1){    
         sphere_edges.push(i);   
         sphere_edges.push(i+1);
     }
-    //sphere_edges.push(i);
-   for(var j = 1; j <nlong+1; j++)
         
-    for(var k = j ; k < (nlong+j+1) * (nlat) ; k+=nlong+1){
+         var k;
+    //sphere_edges.push(i);
+    for(var j = 1; j <nlong; j++){
+        
+    for(k = j ; k < (sphere_points.length/2)-(nlong+1) ; k+=nlong+1){
         sphere_edges.push(k);        
         sphere_edges.push(k+nlong+1);
+                            }
+            sphere_edges.push(k);
+           sphere_edges.push((sphere_points.length/2));
+
+        
+            }
+        
+        
     }
     
     
+    else{
+        for(i=0;i<sphere_points.length/2-1;i+=1){    
+        sphere_edges.push(i);   
+        sphere_edges.push(i+1);
+                 var k;
+            //sphere_edges.push(i);
+        for(var j = 1; j <nlong+1; j++){
+        
+    for(k = j ; k < (sphere_points.length/2)-(nlong+1) ; k+=nlong+1){
+        sphere_edges.push(k);        
+        sphere_edges.push(k+nlong+1);
+    }
+         sphere_edges.push(k);
+           sphere_edges.push((sphere_points.length/2));
+    }}
+   
     
+    //sphere_edges.push(k);
+   //sphere_edges.push(sphere_points.length-1);
+
+   }
+
 }
 
