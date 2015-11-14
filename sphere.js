@@ -2,7 +2,7 @@
 
 var sphereVertices=[];
 var r=0.5;
-var numPointsPerCirc=0;
+
 var nlat = 20;   //horizontal
 var nlong = 20; //vertical
 
@@ -19,6 +19,10 @@ var sphere_faces_buffer;
 var sphere_normal_buffer;
 
 function sphereInit(){
+    sphere_points=[];
+    sphere_edges=[];
+    sphere_faces=[];
+    sphere_normals=[];
     sphereBuild();
     sphereUpLoadData(gl);
 }
@@ -94,7 +98,7 @@ function sphereAddPoints () {
 		
 	var x,y,z;
    
-        panico = (2*Math.PI);
+   panico = (2*Math.PI);
 
    for(phi=-Math.PI;phi<=0;phi+=d_phi){
 		for(theta=0;theta<=panico;theta+=d_theta){
@@ -159,8 +163,8 @@ function sphereAddFacesEdges () {
             }
 
     }
-            sphere_edges.push(k);
-            sphere_edges.push((sphere_points.length)-1);
+          sphere_edges.push(k);
+          sphere_edges.push((sphere_points.length)-1);
     }
     
     //parte de baixo e de cima
