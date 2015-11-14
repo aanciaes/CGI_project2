@@ -3,8 +3,13 @@
 var sphereVertices=[];
 var r=0.5;
 var numPointsPerCirc=0;
-var nlat = 20;
-var nlong = 20;
+var nlat = 30;   //horizontal
+var nlong = 20; //vertical
+
+var nHor = [];
+var nVer = [];
+
+var panico;
 
 
 var sphere_points=[];
@@ -56,99 +61,40 @@ function sphereDrawWireFrame(gl, program){
 function sphereAddPoints () {
 	var d_phi = Math.PI/(nlat+1);
 	var d_theta = (2*Math.PI)/nlong;
-	
-	//sphere_points.push(vec3(0,r,0));
-	
+		
 	var x,y,z;
+
+   for(phi=-Math.PI;phi<=Math.PI;phi+=d_phi){
 		for(theta=0;theta<=(2*Math.PI);theta+=d_theta){
-            	for(phi=0;phi<=3*Math.PI;phi+=d_phi){
-
 			//alert("phi = " + phi + " theta = " + theta);
-			x = r*Math.cos(phi)*Math.cos(theta);
-			y = r*Math.sin(phi);
-			z = r*Math.cos(phi)*Math.sin(theta);
-			sphere_points.push(vec3(x,y,z));
-			//alert("x = " + x + " y = " + y + " z = " + z);
-		}
-	}
-    
-    for(theta=0;theta<=(2*Math.PI);theta+=d_theta){
-            	for(phi=0;phi<=3*Math.PI;phi+=d_phi){
-
-			//alert("phi = " + phi + " theta = " + theta);
-			x = r*Math.cos(phi)*Math.cos(theta);
-			y = r*Math.sin(phi);
-			z = r*Math.cos(phi)*Math.sin(theta);
+			x = r*Math.sin(phi)*Math.sin(theta);
+			y = r*Math.cos(phi);
+			z = r*Math.sin(phi)*Math.cos(theta);
+            
 			sphere_points.push(vec3(x,-y,z));
 			//alert("x = " + x + " y = " + y + " z = " + z);
 		}
 	}
-    
-	//sphere_points.push(vec3(0,-r,0));
-   for(phi=0;phi<=Math.PI;phi+=d_phi){
-		for(theta=0;theta<=(2*Math.PI);theta+=d_theta){
 
-			//alert("phi = " + phi + " theta = " + theta);
-			x = r*Math.cos(phi)*Math.cos(theta);
-			y = r*Math.sin(phi);
-			z = r*Math.cos(phi)*Math.sin(theta);
-			sphere_points.push(vec3(x,-y,z));
-			//alert("x = " + x + " y = " + y + " z = " + z);
-		}
-	}
-    for(phi=0;phi<=Math.PI;phi+=d_phi){
-		for(theta=0;theta<=(2*Math.PI);theta+=d_theta){
 
-			//alert("phi = " + phi + " theta = " + theta);
-			x = r*Math.cos(phi)*Math.cos(theta);
-			y = r*Math.sin(phi);
-			z = r*Math.cos(phi)*Math.sin(theta);
-			sphere_points.push(vec3(x,y,z));
-			//alert("x = " + x + " y = " + y + " z = " + z);
-		}
-	}
-    	/*sphere_points.push(vec3(0,r,0));
-
-		for(theta=0;theta<=(2*Math.PI);theta+=d_theta){
-            for(phi=0;phi<=Math.PI;phi+=d_phi){
-
-			//alert("phi = " + phi + " theta = " + theta);
-			x = r*Math.cos(phi)*Math.cos(theta);
-			y = r*Math.sin(phi);
-			z = r*Math.cos(phi)*Math.sin(theta);
-			sphere_points.push(vec3(x,y,z));
-			//alert("x = " + x + " y = " + y + " z = " + z);
-		}
-	}
-    
-	sphere_points.push(vec3(0,-r,0));
-		for(theta=0;theta<=(2*Math.PI);theta+=d_theta){
-                for(phi=0;phi<=Math.PI;phi+=d_phi){
-
-			//alert("phi = " + phi + " theta = " + theta);
-			x = r*Math.cos(phi)*Math.cos(theta);
-			y = r*Math.sin(phi);
-			z = r*Math.cos(phi)*Math.sin(theta);
-			sphere_points.push(vec3(x,-y,z));
-			//alert("x = " + x + " y = " + y + " z = " + z);
-		}
-	}*/
-	//alert(sphereVertices);
 }
 
 function sphereAddFacesEdges () {
-
-    for(i=0;i<sphere_points.length;i+=1){
-        //sphere_points.push(sphereVertices[i]);
-        //sphere_points.push(sphereVertices[i+1]);
-        //sphere_points.push(sphereVertices[i+nlong*2]);
+    var i;
+   
+    for(i=0;i<sphere_points.length-1;i+=1){    
+        sphere_edges.push(i);   
+        sphere_edges.push(i+1);
+    }
+    //sphere_edges.push(i);
+   for(var j = 1; j <nlong+1; j++)
         
-        
-        sphere_edges.push(i);
-        //sphere_edges.push(i+1);
+    for(var k = j ; k < (nlong+j+1) * (nlat) ; k+=nlong+1){
+        sphere_edges.push(k);        
+        sphere_edges.push(k+nlong+1);
     }
     
-
+    
     
 }
 
