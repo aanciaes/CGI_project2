@@ -29,6 +29,12 @@ void main() {
 </script>
     
     <script id="vertex-phong" type="x-shader/x-vertex">
+    
+    /****************************
+    *                           *
+    *   codigo dado na aula     *
+    *                           *
+    *****************************/
 const vec4 lightPosition = vec4(0.0, 0.0, 1.8, 1.0);
  
 const vec3 ambientColor = vec3(0.2, 0.0, 0.0);
@@ -85,9 +91,9 @@ void main() {
 }
 </script>
 
-<script type="text/javascript" src="../../Common/webgl-utils.js"></script>
-<script type="text/javascript" src="../../Common/initShaders.js"></script>
-<script type="text/javascript" src="../../Common/MV.js"></script>
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MV.js"></script>
 <script type="text/javascript" src="cube.js"></script>
 <script type="text/javascript" src="Cylinder.js"></script>
 <script type="text/javascript" src="sphere.js"></script>
@@ -128,24 +134,47 @@ void main() {
         </select>
         
         <input type="submit" onclick="changeFilling()" value=" Mudar Preenchimento"/>
-        <table><tr><td height="30">
-        <div id="Perspective"  style="display: none;">    
-        Valor de d-> <input type="range" oninput="changePerspective(this.value)"  id="rangeD" min="0.005" max="1" step="0.001"/>
-        </div>
         
-        <div id="Oblique"  style="display: none;">   
-        Valor de L-> <input type="range" oninput="changeObliq()"  id="rangeL" min="0.1" max="1" step="0.1" value ="0.75"/>
-        Valor de α-> <input type="range" oninput="changeObliq()"  id="rangeA" min="-360" max="360" step="1" value = "45"/>
-        </div>
-        
-        <div id="Axo"  style="display: none;">   
-        Valor de X-> <input type="range" oninput="changeAxo()"  id="rangeX" min="-180" max="180" step="1" value = "23"/>
-        Valor de Y-> <input type="range" oninput="changeAxo()"  id="rangeY" min="-180" max="180" step="1" value = "-30"/>
-            </div></td>
-            </tr></table>
                 <div>
             <canvas id="gl-canvas" width="512" height="512"> Oops... your browser doesn't support the HTML5 canvas element"
             </canvas>
+        <table><tr><td>
+        <div id="Perspective"  style="display: none;">    
+        Valor de d-> <input type="range" oninput="changePerspective(this.value)"  id="rangeD" min="0.005" max="1" step="0.001"/>
+                        <output id="rangeDo"></output>
+            
+            <table style="display:inline-table;" >
+                <tr><td>Matriz Perspectiva: </td><td>1</td><td>0</td><td>&nbsp&nbsp0</td><td>0</td></tr>
+                <tr><td></td><td>0</td><td>1</td><td>&nbsp&nbsp0</td><td>0</td></tr>                
+                <tr><td></td><td>0</td><td>0</td><td>&nbsp&nbsp1</td><td>0</td></tr>
+                <tr><td></td><td>0</td><td>0</td><td>1/d</td><td>0</td></tr>
+            </table>
+        </div>
+        
+        <div id="Oblique"  style="display: none;">   
+        Valor de L-> <input type="range" oninput="changeObliq()"  id="rangeL" min="0" max="1" step="0.1" value ="0.75"/>
+            <output id="rangeLo">0.75</output>
+        Valor de α-> <input type="range" oninput="changeObliq()"  id="rangeA" min="-360" max="360" step="1" value = "45"/>
+            <output id="rangeAo">45</output>
+            <br>
+            
+            <table >
+                <tr><td>Matriz Oblíqua: </td><td>1</td><td>0</td><td>-L*cos(α)</td><td>0</td></tr>
+                <tr><td></td><td>1</td><td>0</td><td>-L*sin(α)</td><td>0</td></tr>                
+                <tr><td></td><td>0</td><td>0</td><td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp0</td><td>0</td></tr>
+                <tr><td></td><td>0</td><td>0</td><td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp0</td><td>1</td></tr>
+            </table>                      
+                      
+        </div>
+        
+        <div id="Axo"  style="display: none;">   
+        Valor de X-> <input type="range" oninput="changeAxo()"  name = "rangeX" id="rangeX" min="-180" max="180" step="1" value = "23"/> 
+            <output id="rangeXo">23</output>
+       Valor de Y-> <input align="right" type="range" oninput="changeAxo()"  id="rangeY" min="-180" max="180" step="1" value = "-30"/>
+            <output id="rangeYo">-30</output>
+            </div></td>
+            </tr>
+        </table>
         </div>
     </div>    
 </body>

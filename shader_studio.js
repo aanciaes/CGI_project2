@@ -167,6 +167,8 @@ function changeFilling(){
 
 function changePerspective(d){
     //d = document.getElementById("rangeInput").value;
+    
+    document.getElementById("rangeDo").value = d;
     projPerspective=  mat4(1,0,0,0,
                        0,1,0,0,
                        0,0,1,0,
@@ -178,6 +180,10 @@ function changePerspective(d){
 function changeObliq(l,a){
     l = document.getElementById("rangeL").value;
     a = document.getElementById("rangeA").value;
+    
+    document.getElementById("rangeLo").value = l;
+    document.getElementById("rangeAo").value = a;
+
 
     var projOblique = mat4(1,0,-l*Math.cos(radians(a)),0,
                        0,1,-l*Math.sin(radians(a)),0,
@@ -191,6 +197,9 @@ function changeAxo(){
     
     X = document.getElementById("rangeX").value;
     Y = document.getElementById("rangeY").value;
+    document.getElementById("rangeXo").value = X;
+    document.getElementById("rangeYo").value = Y;
+
     
     projAxo = mult(rotateX(X),rotateY(Y));
     projection = projAxo;
