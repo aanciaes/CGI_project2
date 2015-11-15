@@ -1,4 +1,4 @@
-var segments =30;
+var segments =60;
 
 var vertices = [];
 
@@ -87,10 +87,7 @@ function addFacesEdges (){
     var lastPointUsedBot = [3];
     var aux;
     //Push bot and top center vertices
-    cylinderPoints.push(vertices[0]);
-        cylinderNormal.push(vec3(0,1,0));
-    cylinderPoints.push(vertices[1]);
-        cylinderNormal.push(vec3(0,-1,0));
+    
 
         //cylinderNormal.push(normalize(vertices[1]));
 
@@ -100,27 +97,33 @@ function addFacesEdges (){
         var lastBot = lastPointUsedBot.pop();
         
        //push vertices to be used to create edges and faces to points 
-        cylinderPoints.push(vertices[lastTop]);
-                cylinderNormal.push(vec3(0,1,0));
+        //cylinderPoints.push(vertices[lastTop]);
+        //cylinderPoints.push(vertices[lastBot]);
+        //cylinderPoints.push(vertices[lastTop+2]);
+        //cylinderPoints.push(vertices[lastBot+2]);
+		
+		
+		/*if(i<segments*2){
+		 
+		 
+		 aux = vertices[lastTop];
 
-         
+        cylinderNormal.push(normalize(vec3(aux[0],0,aux[2])));
+		
 
-        cylinderPoints.push(vertices[lastBot]);
-                cylinderNormal.push(vec3(0,-1,0));
-
-           
-
-        cylinderPoints.push(vertices[lastTop+2]);
-          aux = vertices[lastTop+2];
-
-        cylinderNormal.push(normalize(aux[0],0,aux[2]));
+         aux = vertices[lastBot];
         
-        cylinderPoints.push(vertices[lastBot+2]);
-         aux = vertices[lastBot+2];
-        
-        cylinderNormal.push(normalize(aux[0],0,aux[2]));
-        
-        
+        cylinderNormal.push(normalize(vec3(aux[0],0,aux[2])));
+		 
+		}*/
+		
+		
+		
+		
+		
+		
+		
+            
         /*start top triangle*/
         
         //first edge
@@ -197,11 +200,11 @@ function addFacesEdges (){
 function addPoints(segments) {
 	   var theta = (2*Math.PI / segments); //Degrees = radians * (180 / π)
 	   
-    vertices.push(vec3(0,0.5,0));
-                  //      cylinderNormal.push(vec3(0,0.5,0));
-
-       vertices.push(vec3(0,-0.5,0));
-        //    cylinderNormal.push(normalize(vec3(0,-0.5,0)));
+   
+		cylinderPoints.push(vec3(0,0.5,0));
+        cylinderNormal.push(vec3(0,1,0));
+		cylinderPoints.push(vec3(0,-0.5,0));
+        cylinderNormal.push(vec3(0,-1,0));
     
     
 	   for (i =0;i<=segments*2;i++){
@@ -210,8 +213,17 @@ function addPoints(segments) {
 	   
            
 
-	       vertices.push(vec3(x,0.5,z));	//Bottom Vertex
-	       vertices.push(vec3(x,-0.5,z));	//Top Vertex
+	       cylinderPoints.push(vec3(x,0.5,z));	//Bottom Vertex
+	       cylinderPoints.push(vec3(x,-0.5,z));	//Top Vertex
+
+		  /* if(i<segments){
+		   cylinderNormal.push(vec3(0,1,0));
+		   cylinderNormal.push(vec3(0,-1,0));
+		   }
+		   else{*/
+		   cylinderNormal.push(normalize(vec3(x,0.5,z)));
+		   cylinderNormal.push(normalize(vec3(x,-0.5,z)));
+		   //}
 
 	       
 	       /****************************************************************
