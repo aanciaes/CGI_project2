@@ -13,7 +13,7 @@ uniform mat4 mProj;
 
 void main(){
 
-    fColor = vec4(1.0,1.0,0.0,1.0);
+    fColor = vPosition+vNormal;
     gl_Position = mProj * vPosition;
     gl_Position.z = - gl_Position.z;
 }
