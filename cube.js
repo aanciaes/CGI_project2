@@ -19,7 +19,7 @@ var cube_normals_buffer;
 var cube_faces_buffer;
 var cube_edges_buffer;
 
-function cubeInit() {
+function cubeInit(gl) {
     cubeBuild();
     cubeUploadData(gl);
 }
@@ -73,7 +73,7 @@ function cubeDrawWireFrame(gl, program)
 
 function cubeDrawFilled(gl, program)
 {
-    //gl.useProgram(program);
+    gl.useProgram(program);
     
     gl.bindBuffer(gl.ARRAY_BUFFER, cube_points_buffer);
     var vPosition = gl.getAttribLocation(program, "vPosition");
@@ -87,9 +87,6 @@ function cubeDrawFilled(gl, program)
     
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube_faces_buffer);
     gl.drawElements(gl.TRIANGLES, cube_faces.length, gl.UNSIGNED_BYTE, 0);
-    
-    
-    
 }
 
 function cubeAddFace(a, b, c, d, n)
